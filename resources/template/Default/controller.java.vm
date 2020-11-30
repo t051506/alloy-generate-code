@@ -1,0 +1,77 @@
+package $!{jc.packagePath};
+
+import com.alloy.cloud.common.core.base.R;
+import com.alloy.cloud.common.core.util.ConverterUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.BeanUtils;
+import javax.validation.Valid;
+import java.util.List;
+#foreach($import in $jc.imports)
+import $!{import};
+#end
+
+/**
+ * $!{tab.comment}
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/${util.firstLowerCase($tab.name)}")
+@Api(tags = "$!{tab.comment}")
+public class $!{tab.name}Controller {
+    private final $!{tab.name}Service ${util.firstLowerCase($tab.name)}Service;
+
+    @GetMapping("/")
+    @ApiOperation(value = "查询所有")
+    public R<List<$!{tab.name}DTO>> list() {
+        return R.ok(ConverterUtil.copyProperties($!{tab.name}.class,$!{tab.name}DTO.class,${util.firstLowerCase($tab.name)}Service.queryAll()));
+    }
+
+    @PostMapping
+    @ApiOperation("新增")
+    public R create(@Valid @RequestBody $!{tab.name}DTO dto){
+        $!{tab.name} ${util.firstLowerCase($tab.name)} = new $!{tab.name}();
+        BeanUtils.copyProperties(dto,${util.firstLowerCase($tab.name)});
+        ${util.firstLowerCase($tab.name)}Service.insert(${util.firstLowerCase($tab.name)});
+        return R.ok();
+    }
+
+    @PutMapping
+    @ApiOperation("修改")
+    public R update(@Valid @RequestBody $!{tab.name}DTO dto){
+        $!{tab.name} ${util.firstLowerCase($tab.name)} = new $!{tab.name}();
+        BeanUtils.copyProperties(dto,${util.firstLowerCase($tab.name)});
+        ${util.firstLowerCase($tab.name)}Service.update(${util.firstLowerCase($tab.name)});
+        return R.ok();
+    }
+
+    @DeleteMapping("/{$!{tab.pkColumn.name}}")
+    @ApiOperation("删除")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "$!{tab.pkColumn.name}", value = "$!{tab.pkColumn.name}", dataType = "String", paramType = "path",required = true)
+    })
+    public R deleteById(@PathVariable String $!{tab.pkColumn.name}){
+        ${util.firstLowerCase($tab.name)}Service.deleteById($!{tab.pkColumn.name});
+        return R.ok();
+    }
+
+    @GetMapping("/{$!{tab.pkColumn.name}}")
+    @ApiOperation(value = "根据ID查询",httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "$!{tab.pkColumn.name}", value = "$!{tab.pkColumn.name}", dataType = "String", paramType = "path",required = true)
+    })
+    public R<$!{tab.name}DTO> queryById(@PathVariable String $!{tab.pkColumn.name}){
+        $!{tab.name}DTO dto = new $!{tab.name}DTO();
+        BeanUtils.copyProperties(${util.firstLowerCase($tab.name)}Service.queryById($!{tab.pkColumn.name}),dto);
+        return R.ok();
+    }
+}

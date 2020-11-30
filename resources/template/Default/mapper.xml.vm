@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="$!{jc.packagePath}.$!{jc.className}">
+
+    <sql id="BaseColumnSql">
+		$!{tab.baseColumnSql}
+	</sql>
+
+    <sql id="BaseValuesSql">
+		$!{tab.baseValuesSql}
+	</sql>
+
+    <insert id="insert" parameterType="$!{jc.entityPackagePath}">
+        insert into ${util.lowerCase($tab.dbTable.name)} (
+        <include refid="BaseColumnSql"/>
+        )
+        values(
+        <include refid="BaseValuesSql"/>
+        )
+    </insert>
+
+    <update id="update" parameterType="$!{jc.entityPackagePath}">
+        update ${util.lowerCase($tab.dbTable.name)}
+        <set>
+#foreach($column in $tab.otherColumn)
+            <if test="$!{column.name} != null">${util.lowerCase($column.obj.name)} = #{$!{column.name}},</if>
+#end
+            <if test="lastUpdateTime != null">last_update_time = #{lastUpdateTime},</if>
+            <if test="lastUpdateBy != null">last_update_by = #{lastUpdateBy},</if>
+        </set>
+        where ${util.lowerCase($!{tab.pkColumn.obj.name})} = #{id}
+    </update>
+
+    <delete id="deleteById">
+		delete from ${util.lowerCase($tab.dbTable.name)} where ${util.lowerCase($!{tab.pkColumn.obj.name})} = #{id}
+	</delete>
+
+    <select id="queryById" resultType="$!{jc.entityPackagePath}">
+        select
+        <include refid="BaseColumnSql"/>
+        from ${util.lowerCase($tab.dbTable.name)}
+        where ${util.lowerCase($!{tab.pkColumn.obj.name})} = #{id}
+    </select>
+
+    <select id="queryAll" resultType="$!{jc.entityPackagePath}">
+        select
+        <include refid="BaseColumnSql"/>
+        from ${util.lowerCase($tab.dbTable.name)}
+    </select>
+</mapper>

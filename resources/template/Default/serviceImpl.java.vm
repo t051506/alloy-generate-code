@@ -1,0 +1,23 @@
+package $!{jc.packagePath};
+
+import com.alloy.cloud.common.core.base.BaseServiceImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
+#foreach($import in $jc.imports)
+import $!{import};
+#end
+/**
+ * $!{tab.comment}($!{tab.name})表服务实现类
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class $!{tab.name}ServiceImpl extends BaseServiceImpl<Serializable,$!{tab.name}> implements $!{tab.name}Service{
+
+}

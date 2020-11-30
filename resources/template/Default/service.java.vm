@@ -1,0 +1,17 @@
+package $!{jc.packagePath};
+
+import com.alloy.cloud.common.core.base.BaseService;
+import java.io.Serializable;
+#foreach($import in $jc.imports)
+import $!{import};
+#end
+
+/**
+ * $!{tab.comment}
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+public interface $!{jc.className} extends BaseService<Serializable,$!{tab.name}> {
+
+}

@@ -1,0 +1,36 @@
+##引入宏定义
+$!define
+##使用全局变量实现默认包导入
+package $!{jc.packagePath};
+
+import com.alloy.cloud.common.core.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * $!{tab.comment}
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class $!{jc.className} extends BaseEntity{
+    private static final long serialVersionUID = ${util.serial()};
+
+#if(${tab.pkColumn.comment})
+    /**
+     * ${tab.pkColumn.comment}
+     */
+#end
+    private $util.getBaseType($tab.pkColumn.type) $!{tab.pkColumn.name};
+#foreach($column in $tab.otherColumn)
+
+#if(${column.comment})
+    /**
+     * ${column.comment}
+     */
+#end
+    private $util.getBaseType($column.type) $!{column.name};
+#end
+}

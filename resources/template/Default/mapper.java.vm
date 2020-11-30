@@ -1,0 +1,19 @@
+package $!{jc.packagePath};
+
+import com.alloy.cloud.common.core.base.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import java.io.Serializable;
+#foreach($import in $jc.imports)
+import $!{import};
+#end
+
+/**
+ * $!{tab.comment}
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+@Mapper
+public interface $!{jc.className} extends BaseMapper<Serializable,$!{tab.name}> {
+
+}

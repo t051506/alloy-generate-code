@@ -1,0 +1,35 @@
+<idea-plugin>
+  <id>com.your.company.unique.plugin.id</id>
+  <name>alloy-generate-code</name>
+  <version>1.0.0</version>
+  <vendor email="tn_kec@163.com">gen-code</vendor>
+
+  <description>Generate the regular repeating code plug-in</description>
+  <change-notes>Generate the regular repeating code plug-in</change-notes>
+  <idea-version since-build="173.0"/>
+
+  <!--必须为企业版-->
+  <depends>com.intellij.modules.lang</depends>
+  <!--必须依赖Database Tool插件-->
+  <depends>com.intellij.database</depends>
+  <!--必须依赖Velocity插件-->
+  <depends>com.intellij.velocity</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="com.alloy.cloud.plugin.gen.service.TableInfoService"/>
+    <applicationService serviceImplementation="com.alloy.cloud.plugin.gen.service.GenerateCodeService"/>
+  </extensions>
+
+  <actions>
+    <action id="TabGenerateAction" class="com.alloy.cloud.plugin.gen.action.TabGenerateAction" text="Alloy Generate Code"
+            description="generate code by table">
+      <add-to-group group-id="DatabaseViewPopupMenu" anchor="first"/>
+    </action>
+    <!--
+    <action id="BeanGenerateAction" class="com.alloy.cloud.plugin.gen.action.BeanGenerateAction"
+            text="Alloy Generate Code" description="generate code by java bean">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+    </action>
+    -->
+  </actions>
+</idea-plugin>

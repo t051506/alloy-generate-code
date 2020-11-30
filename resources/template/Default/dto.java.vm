@@ -1,0 +1,28 @@
+##引入宏定义
+$!define
+##使用全局变量实现默认包导入
+package $!{jc.packagePath};
+
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * $!{tab.comment}
+ *
+ * @author $!{jc.author}
+ * @since ${util.getSince()}
+ */
+@Data
+@ApiModel(description="$!{tab.comment}")
+public class $!{jc.className} implements Serializable{
+    private static final long serialVersionUID = ${util.serial()};
+#foreach($column in $tab.fullColumn)
+
+#if(${column.comment})
+    @ApiModelProperty(value = "${column.comment}")
+#end
+    private ${util.getBaseType($column.type)} $!{column.name};
+#end
+}
