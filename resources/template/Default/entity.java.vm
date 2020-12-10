@@ -6,7 +6,9 @@ package $!{jc.packagePath};
 import com.alloy.cloud.common.core.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+#foreach($import in $jc.imports)
+import $!{import};
+#end
 /**
  * $!{tab.comment}
  *

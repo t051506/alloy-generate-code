@@ -45,6 +45,8 @@ public class MappingConfig {
         mappings.add(new Mapping("datetime", "java.time.LocalDateTime"));
         mappings.add(new Mapping("timestamp", "java.time.LocalDateTime"));
         mappings.add(new Mapping("boolean", "java.lang.Boolean"));
+        mappings.add(new Mapping("date", "java.time.LocalDate"));
+        mappings.add(new Mapping("smallint(\\(\\d+\\))?", "java.lang.Integer"));
         return mappings;
     }
 

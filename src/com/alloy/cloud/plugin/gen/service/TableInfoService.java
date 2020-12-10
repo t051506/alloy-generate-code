@@ -275,7 +275,8 @@ public class TableInfoService {
 
         for (ColumnInfo columnInfo : tableInfo.getFullColumn()) {
             if ("java.time.LocalDateTime".equals(columnInfo.getType())
-                    || "java.math.BigDecimal".equals(columnInfo.getType())) {
+                    || "java.math.BigDecimal".equals(columnInfo.getType())
+                    || "java.time.LocalDate".equals(columnInfo.getType())){
                 imports.add(columnInfo.getType());
             }
         }
