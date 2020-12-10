@@ -7,7 +7,9 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+#foreach($import in $jc.imports)
+import $!{import};
+#end
 /**
  * $!{tab.comment}
  *
